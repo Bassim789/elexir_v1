@@ -3,7 +3,7 @@
 class DB{
 	function __construct($name){
 		if($name == 'main'){
-			$config_setup = json_decode(file_get_contents("../config.json"), true);
+			$config_setup = json_decode(file_get_contents("../../../config.json"), true);
 			define('DB_MAIN_HOST', $config_setup['db_mysql_db_host']);
 			define('DB_MAIN_NAME', $config_setup['db_mysql_db_name']); 
 			define('DB_MAIN_USERNAME', $config_setup['db_mysql_db_user']);
