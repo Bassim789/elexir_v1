@@ -16,6 +16,11 @@ $db->create_clean_table('user_email', "
 	email VARCHAR(255),
 	INDEX(user_id)
 ");
+$db->create_clean_table('user_phone', "
+	user_id INT(15),
+	phone VARCHAR(31),
+	INDEX(user_id)
+");
 
 
 $db->create_clean_table('debate', "
@@ -42,9 +47,36 @@ $db->create_clean_table('debate_vote', "
 ");
 
 
+$db->create_clean_table('opinion', "
+	user_id INT(15),
+	debate_id INT(15),
+	public_entity_id INT(15),
+	group_id INT(15),
+	opinion_parent_id INT(15),
+	is_public INT(1),
+	title VARCHAR(255),
+	description VARCHAR(2047),
+	INDEX(user_id),
+	INDEX(debate_id),
+	INDEX(public_entity_id),
+	INDEX(group_id),
+	INDEX(is_public)
+");
+$db->create_clean_table('opinion_vote', "
+	user_id INT(15),
+	opinion_id INT(15),
+	public_entity_id INT(15),
+	value INT(1),
+	INDEX(user_id),
+	INDEX(public_entity_id),
+	INDEX(opinion_id),
+	INDEX(value)
+");
+
+
 echo 'clean tables created<br><br>';
 
-
+ 
 
 // Insert data
 
