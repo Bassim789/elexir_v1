@@ -4,7 +4,7 @@ require_once("DB.php");
 $db = new DB('main');
 
 // Create clean tables
-
+ 
 $db->create_clean_table('user', "
 	password_hash VARCHAR(255),
 	cookie_auto_login VARCHAR(255),

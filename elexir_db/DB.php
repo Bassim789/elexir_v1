@@ -1,9 +1,13 @@
 <?php
-require_once('db_config.php');
 
 class DB{
 	function __construct($name){
 		if($name == 'main'){
+			$config_setup = json_decode(file_get_contents("../config.json"), true);
+			define('DB_MAIN_HOST', $config_setup['db_mysql_db_host']);
+			define('DB_MAIN_NAME', $config_setup['db_mysql_db_name']); 
+			define('DB_MAIN_USERNAME', $config_setup['db_mysql_db_user']);
+			define('DB_MAIN_PASSWORD', $config_setup['db_mysql_db_password']);
 			$this->db = new PDO('mysql:host='.DB_MAIN_HOST.';dbname='.DB_MAIN_NAME.';charset=utf8', 
 								DB_MAIN_USERNAME, DB_MAIN_PASSWORD);
 			$this->db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
