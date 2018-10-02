@@ -5,7 +5,7 @@ error_reporting(-1);
 
 session_start();
 require_once "DB.php";
-$db = new DB('main');
+$db = new DB('main', $debug = true);
 
 include_once "create_tables.php";
 include_once "insert_data.php";

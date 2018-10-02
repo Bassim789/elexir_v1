@@ -10,14 +10,17 @@ class DB{
             define('DB_MAIN_NAME', $config_setup['db_mysql_db_name']); 
             define('DB_MAIN_USERNAME', $config_setup['db_mysql_db_user']);
             define('DB_MAIN_PASSWORD', $config_setup['db_mysql_db_password']);
-            $this->db = new PDO('mysql:host='.DB_MAIN_HOST.';dbname='.DB_MAIN_NAME.';charset=utf8', 
-                                DB_MAIN_USERNAME, DB_MAIN_PASSWORD);
+            $this->db = new PDO('mysql:host='.DB_MAIN_HOST.';dbname='.DB_MAIN_NAME.';charset=utf8', DB_MAIN_USERNAME, DB_MAIN_PASSWORD);
             $this->db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             $this->db->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
         }
     }
+    function force_drop_table($table_name){
+        $this->db->exec("SET FOREIGN_KEY_CHECKS=0; DROP TABLE IF EXISTS `$table_name`; SET FOREIGN_KEY_CHECKS=1;");
+    }
     function create_clean_table($table_name, $cols_str){
         $indexes = [];
+        $foreign_keys = [];
         $sql = "CREATE TABLE `$table_name` (\n";
         $sql .= 'id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,';
         $cols = explode("\n", clean_str($cols_str));
@@ -25,9 +28,9 @@ class DB{
             $col = trim($col);
             if($col == '') continue;
             if (endsWith($col, '_id')) {
-                $col .= ' INT(15) INDEX';
-            }
-            if(endsWith($col, ' INDEX')){
+                $col .= ' INT(15)';
+                $foreign_keys[] = explode('_id', $col)[0];
+            } else if(endsWith($col, ' INDEX')){
                 $col = explode(' INDEX', $col)[0];
                 $indexes[] = explode(' ', $col)[0];
             }
@@ -36,10 +39,13 @@ class DB{
         foreach ($indexes as $i => $index) {
             $sql .= "\n".'INDEX('.trim($index).'),';
         }
+        foreach ($foreign_keys as $i => $foreign_key){
+            $sql .= "\n".'FOREIGN KEY ('.$foreign_key.'_id) REFERENCES `'.$foreign_key.'`(id) ON DELETE CASCADE,';
+        }
         $sql = trim($sql, ',');
         $sql .= "\n)";
         if($this->debug) echo nl2br($sql).'<br><br>';
-        $this->db->exec("DROP TABLE IF EXISTS `$table_name`");
+        $this->force_drop_table($table_name);
         $this->db->exec($sql);
     }
     function insert($table, $data) {

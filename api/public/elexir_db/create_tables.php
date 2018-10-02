@@ -26,52 +26,16 @@ $db->create_clean_table('user_social_media_account', "
     account_type VARCHAR(31) INDEX
     account_num INT(31) INDEX
 ");
-$db->create_clean_table('user_log', "
-    user_id
-    action_id
-    object_1_id
-    object_2_id
-    object_3_id
-    timestamp INT(15) INDEX
-");
 $db->create_clean_table('user_log_action', "
     name VARCHAR(255)
 ");
-
-
-// DEBATE
-$db->create_clean_table('debate', "
+$db->create_clean_table('user_log', "
     user_id
-    public_entity_id
-    group_id
-    is_public INT(1) INDEX
-    title VARCHAR(255)
-    description VARCHAR(2047)
-");
-$db->create_clean_table('debate_vote', "
-    user_id
-    debate_id
-    public_entity_id
-    value INT(1) INDEX
-");
-
-
-// OPINION
-$db->create_clean_table('opinion', "
-    user_id
-    debate_id
-    public_entity_id
-    group_id
-    opinion_parent_id
-    is_public INT(1) INDEX
-    title VARCHAR(255)
-    description VARCHAR(2047)
-");
-$db->create_clean_table('opinion_vote', "
-    user_id
-    opinion_id
-    public_entity_id
-    value INT(1) INDEX
+    user_log_action_id
+    object_1_id INT(15) INDEX
+    object_2_id INT(15) INDEX
+    object_3_id INT(15) INDEX
+    timestamp INT(15) INDEX
 ");
 
 
@@ -112,6 +76,42 @@ $db->create_clean_table('group_user', "
 $db->create_clean_table('group_public_entity', "
     group_id
     public_entity_id
+");
+
+
+// DEBATE
+$db->create_clean_table('debate', "
+    user_id
+    public_entity_id
+    group_id
+    is_public INT(1) INDEX
+    title VARCHAR(255)
+    description VARCHAR(2047)
+");
+$db->create_clean_table('debate_vote', "
+    user_id
+    debate_id
+    public_entity_id
+    value INT(1) INDEX
+");
+
+
+// OPINION
+$db->create_clean_table('opinion', "
+    user_id
+    debate_id
+    public_entity_id
+    group_id
+    opinion_parent_id INT(15) INDEX
+    is_public INT(1) INDEX
+    title VARCHAR(255)
+    description VARCHAR(2047)
+");
+$db->create_clean_table('opinion_vote', "
+    user_id
+    opinion_id
+    public_entity_id
+    value INT(1) INDEX
 ");
 
 

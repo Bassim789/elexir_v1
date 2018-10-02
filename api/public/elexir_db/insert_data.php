@@ -1,5 +1,6 @@
 <?php
 
+// USER
 $user1_id = $db->insert('user', [
     'password_hash' => '53415kl5nk3',
     'cookie_auto_login' => 'g9gf89FJIhfg4',
@@ -17,34 +18,50 @@ $user3_id = $db->insert('user', [
 ]);
 
 
+// PUBLIC ENTITY
+$public_entity_anonymous_id = $db->insert('public_entity', [
+    'title' => 'anonymous public entity',
+    'description' => 'anonymous public entity'
+]);
+
+
+// GROUP
+$group_anonymous_id = $db->insert('group', [
+    'title' => 'main group',
+    'description' => 'main group'
+]);
+
+
+// DEBATE
 $debate1_id = $db->insert('debate', [
     'user_id' => $user1_id,
-    'public_entity_id' => 0,
-    'group_id' => 0,
+    'public_entity_id' => $public_entity_anonymous_id,
+    'group_id' => $group_anonymous_id,
     'is_public' => 1,
     'title' => 'first debate title',
     'description' => 'first debate description'
 ]);
 $debate2_id = $db->insert('debate', [
     'user_id' => $user2_id,
-    'public_entity_id' => 0,
-    'group_id' => 0,
+    'public_entity_id' => $public_entity_anonymous_id,
+    'group_id' => $group_anonymous_id,
     'is_public' => 0,
     'title' => 'second debate title',
     'description' => 'seconde debate description'
 ]);
 
 
+// DEBATE VOTE
 $debate_vote1_id = $db->insert('debate_vote', [
     'user_id' => $user1_id,
     'debate_id' => $debate1_id,
-    'public_entity_id' => 0,
+    'public_entity_id' => $public_entity_anonymous_id,
     'value' => 1
 ]);
 $debate_vote2_id = $db->insert('debate_vote', [
     'user_id' => $user2_id,
     'debate_id' => $debate1_id,
-    'public_entity_id' => 0,
+    'public_entity_id' => $public_entity_anonymous_id,
     'value' => 0
 ]);
 
