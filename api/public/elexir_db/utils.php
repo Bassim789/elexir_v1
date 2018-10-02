@@ -9,5 +9,5 @@ function endsWith($haystack, $needle){
     return (substr($haystack, -$length) === $needle);
 }
 function clean_str($str){
-	return trim(trim($str, "\n"), ',');
+    return trim(trim($str, "\n"), ',');
 }
