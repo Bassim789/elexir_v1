@@ -2,7 +2,7 @@
   <section class="container">
     <div>
       <h1 class="title">
-        test page
+        Démo débat
       </h1>
       <div class="links">
         <a
