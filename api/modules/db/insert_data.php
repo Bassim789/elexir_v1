@@ -62,6 +62,40 @@ $debate_vote2_id = $db->insert('debate_vote', [
     'user_id' => $user2_id,
     'debate_id' => $debate1_id,
     'public_entity_id' => $public_entity_anonymous_id,
-    'value' => 0
+    'value' => -1
 ]);
+$debate_vote3_id = $db->insert('debate_vote', [
+    'user_id' => $user3_id,
+    'debate_id' => $debate1_id,
+    'public_entity_id' => $public_entity_anonymous_id,
+    'value' => 1
+]);
+
+
+// DEBATE OPINION
+$opinion1_id = $db->insert('opinion', [
+    'user_id' => $user1_id,
+    'debate_id' => $debate1_id,
+    'public_entity_id' => $public_entity_anonymous_id,
+    'group_id' => $group_anonymous_id,
+    'value' => 1,
+    'opinion_parent_id' => 0,
+    'is_public' => 1,
+    'title' => 'my first opinion',
+    'description' => 'my first opinion description'
+]);
+$opinion2_id = $db->insert('opinion', [
+    'user_id' => $user2_id,
+    'debate_id' => $debate1_id,
+    'public_entity_id' => $public_entity_anonymous_id,
+    'group_id' => $group_anonymous_id,
+    'value' => 1,
+    'opinion_parent_id' => 0,
+    'is_public' => 1,
+    'title' => 'my second opinion',
+    'description' => 'my second opinion description'
+]);
+
+
+
 

@@ -11,3 +11,12 @@ function endsWith($haystack, $needle){
 function clean_str($str){
     return trim(trim($str, "\n"), ',');
 }
+function action($action){
+    return isset($_GET['action']) && $_GET['action'] === $action;
+}
+function send($data){
+    die(json_encode($data));
+}
+function send_error($msg){
+    send(['error' => $msg]);
+}

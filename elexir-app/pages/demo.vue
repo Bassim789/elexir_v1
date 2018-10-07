@@ -9,16 +9,35 @@
           href="/"
           class="button--grey">home</a>
       </div>
+      <br><br>
+      <DebateInfo :debate="debate" />
     </div>
   </section>
 </template>
 
 <script>
-import AppLogo from '~/components/AppLogo.vue'
+import api from '~/components/axios_public_api'
+import DebateInfo from '~/components/DebateInfo.vue'
 
 export default {
   components: {
-    AppLogo
+    DebateInfo
+  },
+  data() {
+    return {
+      title: 'test title'
+    }
+  },
+  asyncData(context, callback) {
+    console.log('asyncData start')
+    const debate_id = 1
+    api.get('/debate?action=get_basic_info', {params: {debate_id}}).then(res => {
+      console.log(res.data)
+      callback(null, {debate: res.data})
+    }).catch(e => {
+      console.log(e)
+      callback(null, {debate_info: {}})
+    })
   }
 }
 </script>

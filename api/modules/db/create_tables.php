@@ -104,6 +104,7 @@ $db->create_clean_table('opinion', "
     group_id
     opinion_parent_id INT(15) INDEX
     is_public INT(1) INDEX
+    value INT(1) INDEX
     title VARCHAR(255)
     description VARCHAR(2047)
 ");
