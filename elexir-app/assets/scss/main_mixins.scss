@@ -1,0 +1,10 @@
+
+@function get_color_side($side){
+  @if $side == 'pro' {
+    @return $color-pro;
+  } @else if $side == 'neutral' {
+    @return $color-neutral;
+  } @else if $side == 'con' {
+    @return $color-con;
+  }
+}

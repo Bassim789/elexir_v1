@@ -10,9 +10,16 @@ module.exports = {
       { hid: 'description', name: 'description', content: 'Nuxt.js project' }
     ],
     link: [
-      { rel: 'icon', type: 'image/x-icon', href: '/img/favicon.ico' }
+      { rel: 'icon', type: 'image/x-icon', href: '/img/elexir_logo_v2_transparent_48px.png?v=1' },
+      { rel: 'stylesheet', type: 'text/css', href: '/lib/font-awesome/css/font-awesome.css' }
     ]
   },
+
+  // css: [
+  //   {src: '/assets/font-awesome.css', lang: 'css'}
+  // ],
+
+
   /*
   ** Customize the progress bar color
   */
@@ -21,19 +28,30 @@ module.exports = {
   ** Build configuration
   */
   build: {
-    /*
-    ** Run ESLint on save
-    */
-    // extend (config, { isDev, isClient }) {
-    //   if (isDev && isClient) {
-    //     config.module.rules.push({
-    //       enforce: 'pre',
-    //       test: /\.(js|vue)$/,
-    //       loader: 'eslint-loader',
-    //       exclude: /(node_modules)/
-    //     })
-    //   }
-    // }
-  }
+      // extractCSS: true
+  },
+ 
+  // modules: [
+  //   'bootstrap-vue/nuxt',
+  // ],
+
+  // css: [
+  //   { src: '~assets/scss/main_variables.scss', lang: 'scss' },
+  //   { src: '~assets/scss/main_mixins.scss', lang: 'scss' },
+  // ],
+
+  
+
+  // css: {
+  //   loaderOptions: {
+  //     // pass options to sass-loader
+  //     sass: {
+  //       // @/ is an alias to src/
+  //       // so this assumes you have a file named `src/variables.scss`
+  //       data: `@import "@/assets/scss/main_variables.scss";`
+  //     }
+  //   }
+  // }
+
 }
 

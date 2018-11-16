@@ -92,27 +92,27 @@ $db->create_clean_table('debate_vote', "
     user_id
     debate_id
     public_entity_id
-    value INT(1) INDEX
+    side INT(1) INDEX
 ");
 
 
-// OPINION
-$db->create_clean_table('opinion', "
+// Argument
+$db->create_clean_table('argument', "
     user_id
     debate_id
     public_entity_id
     group_id
-    opinion_parent_id INT(15) INDEX
+    parent_argument_id INT(15) INDEX
     is_public INT(1) INDEX
-    value INT(1) INDEX
+    side INT(1) INDEX
     title VARCHAR(255)
     description VARCHAR(2047)
 ");
-$db->create_clean_table('opinion_vote', "
+$db->create_clean_table('argument_vote', "
     user_id
-    opinion_id
+    argument_id
     public_entity_id
-    value INT(1) INDEX
+    side INT(1) INDEX
 ");
 
 

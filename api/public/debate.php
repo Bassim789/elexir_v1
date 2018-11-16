@@ -1,35 +1,30 @@
 <?php
-require_once "start_public_api.php";
-
-function remove_user_id($item){
-    if(isset($item['user_id'])) unset($item['user_id']);
-    return $item;
-}
-
-function remove_user_id_from_list($items){
-    $new_item_list = [];
-    foreach ($items as $item) $new_item_list[] = remove_user_id($item);
-    return $new_item_list;
-}
-
-function get_debate_opinions($debate_id){
-    $opinions = $GLOBALS['db']->get_all('opinion', 'WHERE debate_id = '.intval($debate_id));
-    $opinions = remove_user_id_from_list($opinions);
-    return $opinions;
-}
+require_once 'start_public_api.php';
+require_once API_ROOT_PATH.'modules/Debate.php';
 
 if(action('get_basic_info')){
-    $debate_id = intval($_GET['debate_id']);
-    $debate = $db->get_one('debate', $debate_id);
-    if(!$debate) send_error('no debate found');
-    $debate = remove_user_id($debate);
-    $debate['nb_vote_pro'] = $db->count('debate_vote', 'WHERE debate_id = '.$debate_id.' AND value = 1');
-    $debate['nb_vote_neutral'] = $db->count('debate_vote', 'WHERE debate_id = '.$debate_id.' AND value = 0');
-    $debate['nb_vote_con'] = $db->count('debate_vote', 'WHERE debate_id = '.$debate_id.' AND value = -1');    
-    $debate['opinions'] = get_debate_opinions($debate_id);
-    send($debate);
+  $debate = new Debate($_GET['debate_id']);
+  $debate->get_db_data();
+  if(!$debate->data) send_error('no debate data found');
+  $debate->anonymize();
+  $debate->add_nb_vote_and_percent();
+  $debate->add_arguments();   
+  send($debate->data);
 }
 
-send([
-    'error' => 'no action found'
-]);
+if(action('add_new_argument')){
+  $argument1_id = $db->insert('argument', [
+    'user_id' => 1,
+    'debate_id' => $_POST['debate_id'],
+    'public_entity_id' => $public_entity_anonymous_id,
+    'group_id' => $group_anonymous_id,
+    'side' => 0,
+    'parent_argument_id' => $_POST['parent_argument_id'],
+    'is_public' => 1,
+    'title' => $_POST['title'],
+    'description' => $_POST['description']
+  ]);
+  send(['test' => 'ok', 'post' => $_POST]);
+}
+
+send_error('no action found');
