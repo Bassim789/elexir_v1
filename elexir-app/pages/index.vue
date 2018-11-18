@@ -19,11 +19,23 @@ import Header from '~/layouts/Header.vue'
 import Footer from '~/layouts/Footer.vue'
 
 export default {
+  middleware: 'index',
   components: {
     Header, Footer
   },
+  beforeMount() {
+    this.$store.commit('set_cookie')
+  },
+  head() {
+    return {
+      title: 'ELEXIR | Election et débat intelligent',
+      meta: [
+        { hid: 'description', name: 'description', content: 'Election et débat intelligent' }
+      ]
+    }
+  },
   methods: {
-  
+    
   }
 }
 </script>

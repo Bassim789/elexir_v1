@@ -1,8 +1,9 @@
 <template>
 <div>
   <header>
-        
-        <div class="back_btn">
+    <div class="header_inner">
+
+        <div class="back_btn left_area">
 
           <div v-if="is_back_btn">
             <a v-on:click="go_back">
@@ -10,7 +11,7 @@
             </a>
           </div>
 
-          <div class="back_btn" v-if="!is_back_btn && !is_homepage">
+          <div v-if="!is_back_btn && !is_homepage">
             <a v-on:click="go_home">
               <i class="fas fa-home"></i>
             </a>
@@ -18,10 +19,15 @@
 
         </div>
         
-        <a v-on:click="go_home">
+        <a v-on:click="go_home" class="center area">
           <img class="logo_header" src="/img/elexir_logo_v2_transparent_192px.png" />
         </a>
- 
+
+        <div class="user_info_btn right_area">
+          {{user_name}}
+          <i class="fas fa-user user_icon"></i>
+        </div>
+    </div>
   </header>
   <div id="header_margin"></div>
 </div>
@@ -34,7 +40,9 @@ export default {
     'is_homepage',
   ],
   data(){
-    return {is_back_btn: false}
+    return {
+      is_back_btn: false
+    }
   },
   methods: {
     go_back(){
@@ -45,6 +53,11 @@ export default {
       this.$router.push('/')
       this.is_back_btn = true
     },
+  },
+  computed: {
+    user_name(){
+      return this.$store.state.user.name
+    }
   }
 }
 </script>
@@ -53,10 +66,7 @@ export default {
 <style lang="scss" scoped>
 @import "assets/scss/main_variables.scss";
 
-header::after {
-  content: '';
-  width: 50px;
-}
+
 header{
   position: fixed;
   top: 0;
@@ -65,32 +75,64 @@ header{
   background: #fff;
   color: #333;
   width: 100%;
-  display: flex;
   height: 50px;
-  text-align: center;
-  align-items: center;
-  justify-content: space-between;
   border-bottom: 1px solid #ddd;
   z-index: 10;
-  a{
-    color: #fff;
-    text-decoration: none;
-    cursor: pointer;
-    margin: auto;
+  .header_inner{
+    width: 100%;
     height: 100%;
-    width: auto;
-  }
-  .back_btn{
-    width: 50px;
-  }
-  .back_btn a{
-    color: #ddd;
-    font-size: 30px;
-  }
-  .logo_header{
-    height: 100%;
-    width: auto;
-    margin: auto;
+    position: relative;
+    text-align: center;
+    .left_area{
+      position: absolute;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .right_area{
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .center_area{
+      margin: auto;
+    }
+    a{
+      color: #fff;
+      text-decoration: none;
+      cursor: pointer;
+      margin: auto;
+      height: 100%;
+      width: auto;
+    }
+    .back_btn{
+      margin-left: 10px;
+    }
+    .back_btn a{
+      color: #ddd;
+      font-size: 30px;
+    }
+    .logo_header{
+      height: 100%;
+      width: auto;
+      margin: auto;
+    }
+    .user_info_btn{
+      cursor: pointer;
+      margin-right: 10px;
+      .user_icon{
+        color: $color-neutral;
+        font-size: 26px;
+        margin-left: 5px;
+      }
+    }
   }
 }
 #header_margin{

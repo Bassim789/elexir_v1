@@ -24,8 +24,8 @@ import NewArgument from '~/components/NewArgument.vue'
 import Arguments from '~/components/Arguments.vue'
 import Footer from '~/layouts/Footer.vue'
 
-
 export default {
+  middleware: 'index',
   components: {
     Header,
     DebateInfo,
@@ -38,11 +38,8 @@ export default {
     return {}
   },
   asyncData(context, callback) {
-    console.log('asyncData start')
-    console.log(context)
     const debate_id = context.params.id
     api.get('/debate?action=get_basic_info', {params: {debate_id}}).then(res => {
-      console.log(res.data)
       callback(null, {debate: res.data})
     }).catch(e => {
       console.log(e)
@@ -56,6 +53,9 @@ export default {
         { hid: 'description', name: 'description', content: this.debate.description }
       ]
     }
+  },
+  beforeMount() {
+    this.$store.commit('set_cookie')
   },
   methods: {
     reload_debate_data(){

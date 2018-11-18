@@ -2,33 +2,33 @@
 
 // USER
 $user1_id = $db->insert('user', [
-    'password_hash' => '53415kl5nk3',
-    'cookie_auto_login' => 'g9gf89FJIhfg4',
+    'name' => 'user 1',
+    'password_hash' => 'g9gf89FJIhfg4',
     'confidence_level' => 1
 ]);
 $user2_id = $db->insert('user', [
-    'password_hash' => '53415kl5nk3321',
-    'cookie_auto_login' => 'g9gf89FJIhfg4312',
+    'name' => 'user 2',
+    'password_hash' => 'g9gf89FJIhfg4312',
     'confidence_level' => 2
 ]);
 $user3_id = $db->insert('user', [
-    'password_hash' => '5343215kl5nk3321',
-    'cookie_auto_login' => 'g9gf32189FJIhfg4312',
+    'name' => 'user 3',
+    'password_hash' => 'g9gf32189FJIhfg4312',
     'confidence_level' => 4
 ]);
 $user4_id = $db->insert('user', [
-    'password_hash' => '5343215kl5nk3321',
-    'cookie_auto_login' => 'g9gf32189FJIhfg4312',
+    'name' => 'user 4',
+    'password_hash' => 'g9gf32189FJIhfg4312',
     'confidence_level' => 4
 ]);
 $user5_id = $db->insert('user', [
-    'password_hash' => '534hsdhf546452624',
-    'cookie_auto_login' => 'gfgdsg2456456543',
+    'name' => 'user 5',
+    'password_hash' => 'gfgdsg2456456543',
     'confidence_level' => 4
 ]);
 $user6_id = $db->insert('user', [
-    'password_hash' => '534hfdsaf',
-    'cookie_auto_login' => 'gfgd54323',
+    'name' => 'user 6',
+    'password_hash' => 'gfgd54323',
     'confidence_level' => 3
 ]);
 

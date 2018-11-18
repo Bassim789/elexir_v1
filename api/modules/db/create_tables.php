@@ -2,8 +2,8 @@
 
 // USER
 $db->create_clean_table('user', "
+    name VARCHAR(255)
     password_hash VARCHAR(255)
-    cookie_auto_login VARCHAR(255) INDEX
     confidence_level INT(1)
 ");
 $db->create_clean_table('user_email', "
@@ -36,6 +36,12 @@ $db->create_clean_table('user_log', "
     object_2_id INT(15) INDEX
     object_3_id INT(15) INDEX
     timestamp INT(15) INDEX
+");
+$db->create_clean_table('user_session', "
+    user_id
+    token VARCHAR(63)
+    data TEXT NOT NULL
+    timestamp_last_access INT(15) INDEX
 ");
 
 
