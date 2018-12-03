@@ -89,6 +89,13 @@ class DB{
         $sql->bindParam(':col_where', $where);
         $sql->execute();
     }
+    public function delete_where($table, $where) {
+        $sql = $this->db->prepare(
+            "DELETE FROM $table
+            WHERE $where"
+        );
+        $sql->execute();
+    }
     public function get_all($table, $where = '') {
         $sql = $this->db->prepare(
             "SELECT *

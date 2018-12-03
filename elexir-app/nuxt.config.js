@@ -11,7 +11,10 @@ module.exports = {
     ],
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/img/elexir_logo_v2_transparent_48px.png?v=1' },
-      { rel: 'stylesheet', type: 'text/css', href: '/lib/font-awesome/css/font-awesome.css' }
+      { rel: 'stylesheet', type: 'text/css', href: '/lib/font-awesome/css/font-awesome.css' },
+    ],
+    script: [
+      {type: 'text/javascript', src: '/lib/user_agent_parser.js'}
     ]
   },
 

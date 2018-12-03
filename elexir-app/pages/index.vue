@@ -23,9 +23,6 @@ export default {
   components: {
     Header, Footer
   },
-  beforeMount() {
-    this.$store.commit('set_cookie')
-  },
   head() {
     return {
       title: 'ELEXIR | Election et débat intelligent',
@@ -42,12 +39,10 @@ export default {
 
 <style lang="scss" scoped>
 @import "assets/scss/main_variables.scss";
-
 .logo_with_name_banner{
-  width: 100%;
   max-width: 600px;
+  max-height: 60vh;
 }
-
 .title {
   font-family: LOVES, "Helvetica Neue", Arial, sans-serif;
   display: block;
@@ -56,7 +51,6 @@ export default {
   color: $color-dark-1;
   letter-spacing: 1px;
 }
-
 .links {
   padding-top: 15px;
 }
@@ -64,13 +58,12 @@ export default {
   margin: 10px;
   margin-bottom: 10px;
 }
-
-
 @media all and (max-width: 600px) {
   .title {
     font-size: 18px;
   }
+  .logo_with_name_banner{
+    max-width: 100%;
+  }
 }
-
 </style>
-

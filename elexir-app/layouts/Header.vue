@@ -22,10 +22,11 @@
         <a v-on:click="go_home" class="center area">
           <img class="logo_header" src="/img/elexir_logo_v2_transparent_192px.png" />
         </a>
-
-        <div class="user_info_btn right_area">
+        
+        <div v-on:click="go_to_user_info" class="user_info_btn right_area">
           {{user_name}}
-          <i class="fas fa-user user_icon"></i>
+          <!-- <i class="fas fa-user user_icon"></i> -->
+          <img :src="profil_picture" class="profil_picture" />
         </div>
     </div>
   </header>
@@ -44,6 +45,11 @@ export default {
       is_back_btn: false
     }
   },
+  beforeMount() {
+    this.$store.commit('set_cookie')
+    this.$store.commit('set_user_info')
+    console.log('user: ', this.$store.state.user)
+  },
   methods: {
     go_back(){
       this.$router.back()
@@ -53,10 +59,17 @@ export default {
       this.$router.push('/')
       this.is_back_btn = true
     },
+    go_to_user_info(){
+      this.$router.push('/user_info')
+      this.is_back_btn = true
+    }
   },
   computed: {
     user_name(){
-      return this.$store.state.user.name
+      return this.$store.state.user.public_entities[0].title
+    },
+    profil_picture(){
+      return this.$store.state.user.public_entities[0].profil_picture
     }
   }
 }
@@ -78,6 +91,11 @@ header{
   height: 50px;
   border-bottom: 1px solid #ddd;
   z-index: 10;
+  .profil_picture{
+    max-height: 50px;
+    max-width: 100px;
+    margin-left: 10px;
+  }
   .header_inner{
     width: 100%;
     height: 100%;
@@ -126,11 +144,10 @@ header{
     }
     .user_info_btn{
       cursor: pointer;
-      margin-right: 10px;
+      margin-right: 0px;
       .user_icon{
         color: $color-neutral;
         font-size: 26px;
-        margin-left: 5px;
       }
     }
   }

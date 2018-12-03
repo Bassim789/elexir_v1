@@ -20,3 +20,25 @@ function send($data){
 function send_error($msg){
     send(['error' => $msg]);
 }
+function send_ok(){
+    send(['res' => 'ok']);
+}
+function request($url, $params = []){
+    $params_str = '';
+    foreach ($params as $key => $value){
+        $params_str .= $key.'='.urlencode($value).'&';
+    }
+    $params_str = trim($params_str, '&');
+    $curl = curl_init();
+    curl_setopt_array($curl, [
+       CURLOPT_RETURNTRANSFER => 1,
+       CURLOPT_URL => $url,
+       CURLOPT_SSL_VERIFYHOST => 0,
+       CURLOPT_SSL_VERIFYPEER => false,
+       CURLOPT_POST => 1,
+       CURLOPT_POSTFIELDS => $params_str
+    ]);
+    $res = curl_exec($curl);
+    curl_close($curl);
+    return $res;
+}

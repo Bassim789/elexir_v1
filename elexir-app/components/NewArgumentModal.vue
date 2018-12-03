@@ -3,14 +3,15 @@
   <div class="close_btn_wrap">
     <CloseBtn :click_btn="close" />  
   </div>
-  <h3>Ajouter un argument</h3>
   <form v-on:submit.prevent>
     <input type="hidden" ref="debate_id" :value="debate_id">
     <input type="hidden" ref="parent_argument_id" :value="parent_argument_id">
     <input type="text" ref="title" placeholder="Titre" autocomplete="off">
     <textarea ref="description" placeholder="Argument"></textarea>
   </form>
-  <div v-if="!loading" class="btn-modal-submit" @click="submit">Ajouter</div>
+  <div v-if="!loading" class="btn-modal-submit" :class="debate_user_own_vote" @click="submit">
+    Ajouter argument
+  </div>
   <div v-else class="btn-modal-loading">
     <img src="/img/loading.gif" />
   </div>
@@ -21,10 +22,14 @@
 import Modal from '~/components/Modal.vue'
 import CloseBtn from '~/components/CloseBtn.vue'
 import api from '~/components/axios_public_api'
+import api_front from '~/components/api_front'
 export default {
-  props: ['show', 'debate_id', 'parent_argument_id', 'reload_debate_data'],
+  props: ['show', 'debate_id', 'parent_argument_id', 'reload_debate_data', 'debate_user_own_vote'],
   components: {
     Modal, CloseBtn
+  },
+  beforeMount(){
+    console.log('this.debate_user_own_vote: ', this.debate_user_own_vote)
   },
   data(){
     return {
@@ -36,37 +41,39 @@ export default {
       this.$emit('close')
     },
     submit(){
-      console.log('submit')
       this.loading = true
       let data = {
         debate_id: this.$refs.debate_id.value,
         parent_argument_id: this.$refs.parent_argument_id.value,
         title: this.$refs.title.value,
-        description: this.$refs.description.value
+        description: this.$refs.description.value,
+        side: this.debate_user_own_vote
       }
-      console.log(data)
-      api.post('/debate?action=add_new_argument', data).then(res => {
-        console.log(res.data)
+      api_front('debate', 'add_new_argument', data, (res => {
+        console.log(res)
         this.loading = false
         this.reload_debate_data()
         this.close()
-      }).catch(e => {
-        console.log(e)
-        this.loading = false
-      })
+      }))
     }
-  }
+  },
+  watch: {
+    show() {
+      console.log('this.$refs.description: ', this.$refs.title)
+      setTimeout(() => {
+        if (this.show) this.$refs.description.focus().select()
+      }, 100)
+    }
+  },
 }
 </script>
 
 <style lang="scss" scoped>
 @import "assets/scss/main_variables.scss";
 @import "assets/scss/main_mixins.scss";
-
 h3 {
   padding-top: 20px;
 }
-
 form{
   display: flex;
   flex-direction: column;
@@ -87,17 +94,29 @@ form{
     font-size: 16px;
   }
 }
-
 .btn-modal-submit{
   width: 100%;
   padding: 10px;
   cursor: pointer;
   color: #fff;
-  background: rgba($color-neutral, 0.8);
+  border-color: $color-neutral;
+  background: rgba($color-neutral, 1);
   &:active {
-    background: rgba($color-neutral, 1);
+    background: rgba($color-neutral, 0.5);
   }
 }
+
+@each $side in $sides {
+  .btn-modal-submit.#{$side}{
+    border-color: get_color_side($side);
+    background: rgba(get_color_side($side), 1);
+    transition: 0.5s;
+    &:active{
+      background: rgba(get_color_side($side), 0.5);
+    }
+  }
+}
+
 
 .btn-modal-loading{
   width: 100%;
@@ -107,11 +126,9 @@ form{
     height: 100%;
   }
 }
-
 .close_btn_wrap{
   position: absolute;
   top: 5px;
   right: 5px;
 }
-
 </style>

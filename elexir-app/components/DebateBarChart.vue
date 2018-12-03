@@ -36,6 +36,7 @@ export default {
   .bar{
     flex: 1;
     align-self: flex-end;
+    transition: 0.5s;
   }
   .pro{
     background: $color-pro;

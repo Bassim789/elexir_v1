@@ -32,7 +32,7 @@ export default {
 
 .description {
   font-weight: 300;
-  font-size: 24px;
+  font-size: 22px;
   color: $color-dark-1;
   word-spacing: 5px;
   padding-bottom: 15px;
