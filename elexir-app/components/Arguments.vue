@@ -23,7 +23,6 @@
 <script>
 import Argument from '~/components/Argument.vue'
 export default {
-  props: ['debate'],
   components: {
     Argument
   },
@@ -39,6 +38,11 @@ export default {
     },
     selected(side){
       return this.side_argument_selected === side ? 'selected' : ''
+    }
+  },
+  computed: {
+    debate(){
+      return this.$store.state.debate
     }
   }
 }

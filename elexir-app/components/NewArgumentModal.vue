@@ -4,12 +4,12 @@
     <CloseBtn :click_btn="close" />  
   </div>
   <form v-on:submit.prevent>
-    <input type="hidden" ref="debate_id" :value="debate_id">
+    <input type="hidden" ref="debate_id" :value="debate.id">
     <input type="hidden" ref="parent_argument_id" :value="parent_argument_id">
     <input type="text" ref="title" placeholder="Titre" autocomplete="off">
     <textarea ref="description" placeholder="Argument"></textarea>
   </form>
-  <div v-if="!loading" class="btn-modal-submit" :class="debate_user_own_vote" @click="submit">
+  <div v-if="!loading" class="btn-modal-submit" :class="debate.user_own_vote" @click="submit">
     Ajouter argument
   </div>
   <div v-else class="btn-modal-loading">
@@ -24,12 +24,12 @@ import CloseBtn from '~/components/CloseBtn.vue'
 import api from '~/components/axios_public_api'
 import api_front from '~/components/api_front'
 export default {
-  props: ['show', 'debate_id', 'parent_argument_id', 'reload_debate_data', 'debate_user_own_vote'],
+  props: ['show', 'parent_argument_id'],
   components: {
     Modal, CloseBtn
   },
   beforeMount(){
-    console.log('this.debate_user_own_vote: ', this.debate_user_own_vote)
+    console.log('this.debate_user_own_vote: ', this.debate.user_own_vote)
   },
   data(){
     return {
@@ -47,12 +47,12 @@ export default {
         parent_argument_id: this.$refs.parent_argument_id.value,
         title: this.$refs.title.value,
         description: this.$refs.description.value,
-        side: this.debate_user_own_vote
+        side: this.debate.user_own_vote
       }
       api_front('debate', 'add_new_argument', data, (res => {
         console.log(res)
         this.loading = false
-        this.reload_debate_data()
+        this.$store.commit('reload_debate_data')
         this.close()
       }))
     }
@@ -65,6 +65,11 @@ export default {
       }, 100)
     }
   },
+  computed: {
+    debate(){
+      return this.$store.state.debate
+    }
+  }
 }
 </script>
 

@@ -7,7 +7,11 @@
 
 <script>
 export default {
-    props: ['debate']
+  computed: {
+    debate(){
+      return this.$store.state.debate
+    }
+  }
 }
 </script>
 

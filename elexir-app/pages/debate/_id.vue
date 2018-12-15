@@ -3,15 +3,13 @@
     <Header back_btn_val="true" search_value="Débat" />
     <section class="container">
       <div>
-        <DebateInfo :debate="debate" />
-        <DebateBarChart :debate="debate" />
-        <SelectVote :debate="debate" :reload_debate_data="reload_debate_data" />
+        <DebateInfo />
+        <DebateBarChart />
+        <SelectVote />
         <br><br>
-        <NewArgument :debate_id="debate.id" 
-            :debate_user_own_vote="debate.user_own_vote" 
-            :reload_debate_data="reload_debate_data"/>
+        <NewArgument />
         <br><br>
-        <Arguments :debate="debate" />
+        <Arguments />
       </div>
     </section>
     <Footer />
@@ -31,7 +29,7 @@ import Footer from '~/layouts/Footer.vue'
 import cookie from '~/components/cookie'
 
 export default {
-  middleware: 'index',
+  middleware: 'debate_info',
   components: {
     Header,
     DebateInfo,
@@ -44,6 +42,7 @@ export default {
   data() {
     return {}
   },
+  /*
   asyncData(context, callback) {
     const cookie_token = cookie.get_token(context)
     const debate_id = context.params.id
@@ -54,8 +53,9 @@ export default {
       console.log(e)
       callback(null, {debate: {}})
     })
-  },
+  },*/
   head() {
+    console.log('head this.debate.title: ', this.debate.title)
     return {
       title: this.debate.title + ' | ELEXIR',
       meta: [
@@ -63,12 +63,9 @@ export default {
       ]
     }
   },
-  methods: {
-    reload_debate_data(){
-      const debate_id = this.debate.id
-      api_front('debate', 'get_basic_info', {debate_id}, (res => {
-        this.debate = res.data
-      }))
+  computed: {
+    debate(){
+      return this.$store.state.debate
     }
   }
 }

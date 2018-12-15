@@ -1,12 +1,11 @@
 <template>
   <div>
-    <div class="button" :class="debate_user_own_vote" @click="show_modal_new_argument = true">
+    <div class="button" :class="debate.user_own_vote" @click="show_modal_new_argument = true">
       Ajouter un argument
     </div>
     <NewArgumentModal 
-      :reload_debate_data="reload_debate_data"
-      :debate_id="debate_id"
-      :debate_user_own_vote="debate_user_own_vote"
+      :debate_id="debate.id"
+      :debate_user_own_vote="debate.user_own_vote"
       :parent_argument_id="0"
       :show="show_modal_new_argument" 
       @close="show_modal_new_argument = false"
@@ -17,7 +16,6 @@
 <script>
 import NewArgumentModal from '~/components/NewArgumentModal.vue'
 export default {
-  props: ['debate_id', 'debate_user_own_vote', 'reload_debate_data'],
   components: {
     NewArgumentModal
   },
@@ -25,7 +23,12 @@ export default {
     return {
       show_modal_new_argument: false
     }
-  },  
+  },
+  computed: {
+    debate(){
+      return this.$store.state.debate
+    }
+  }
 }
 </script>
 

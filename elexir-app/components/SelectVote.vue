@@ -14,7 +14,6 @@
 import api_front from '~/components/api_front'
 
 export default {
-  props: ['debate', 'reload_debate_data'],
   beforeMount(){
     this.vote_select_sides.forEach(vote => {
       if(vote.name === this.debate.user_own_vote) vote.vote_selected = true
@@ -52,10 +51,15 @@ export default {
       console.log('vote_side: ', vote_side)
       api_front('debate', 'select_vote', {vote_side, debate_id}, (res => {
         console.log(res)
-        this.reload_debate_data()
+        this.$store.commit('reload_debate_data')
       }))
     },
   },
+  computed: {
+    debate(){
+      return this.$store.state.debate
+    }
+  }
 }
 </script>
 
